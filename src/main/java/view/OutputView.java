@@ -5,14 +5,12 @@ import java.util.List;
 
 public class OutputView {
 
-    private static final String START_LINE = "|";
-    private static final String BLANK_LINE = "    |";
-    private static final String RUNG_LINE = "----|";
+    private static final String BLANK_LINE = "|    ";
+    private static final String RUNG_LINE = "|----";
 
 
     public void printStatusOfLadders(List<List<Boolean>> rungsStatusPerLadder, int height) {
         for (int nowPosition = height - 1; nowPosition >= 0; nowPosition--) {
-            System.out.print(START_LINE);
             printStatusAtLadderPosition(rungsStatusPerLadder, nowPosition);
             System.out.println();
         }

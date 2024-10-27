@@ -2,20 +2,20 @@ package controller;
 
 import domain.CountOfLadders;
 import domain.Height;
-import domain.Ladders;
+import domain.Ladder;
 import domain.RungsBuilder;
-import service.LaddersService;
+import service.LadderService;
 import view.InputView;
 import view.OutputView;
 
 public class LadderGameController {
 
-    private final LaddersService laddersService;
+    private final LadderService laddersService;
     private final OutputView outputView;
     private final InputView inputView;
 
     public LadderGameController(RungsBuilder rungsBuilder) {
-        this.laddersService = new LaddersService(rungsBuilder);
+        this.laddersService = new LadderService(rungsBuilder);
         this.outputView = new OutputView();
         this.inputView = new InputView();
     }
@@ -24,8 +24,8 @@ public class LadderGameController {
         CountOfLadders countOfLadders = getCountOfLadders();
         Height height = getHeight();
 
-        Ladders ladders = laddersService.createLadders(countOfLadders, height);
-        outputView.printStatusOfLadders(ladders.getRungsStatusAtLadder(), height.value());
+        Ladder ladder = laddersService.createLadder(countOfLadders, height);
+        outputView.printStatusOfLadders(ladder.getRightRungStatus(), height.value());
     }
 
     private CountOfLadders getCountOfLadders() {

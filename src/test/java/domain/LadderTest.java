@@ -1,63 +1,53 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import util.Errors;
 
 class LadderTest {
 
     @Test
-    @DisplayName("사다리의 상태값을 전달받을 수 있다")
-    void getRungsStatusTest() {
+    @DisplayName("Ladder를 통해 각 사다리의 우측 가로줄 유무를 모두 받아올 수 있다.")
+    void constructorTest() {
         // given
-        final List<Boolean> inputRungsStatus = Arrays.asList(true, false, false, false, true, true);
-        final Ladder ladder = Ladder.from(inputRungsStatus);
+        List<List<Boolean>> inputRungsStatus = Arrays.asList(
+            Arrays.asList(false, false, false, false), // first Line의 임시 left rung status
+            Arrays.asList(true, false, false, true),
+            Arrays.asList(false, false, true, false),
+            Arrays.asList(true, true, false, true),
+            Arrays.asList(false, false, true, false)
+        );
         // when
-        final List<Boolean> rungsStatus = ladder.getRungsStatus();
+        List<Line> lineCollection = new ArrayList<>();
+        for (int i = 1; i < inputRungsStatus.size(); i++) {
+            lineCollection.add(Line.of(inputRungsStatus.get(i - 1), inputRungsStatus.get(i)));
+        }
+        final Ladder ladder = new Ladder(lineCollection);
         // then
-        assertThat(rungsStatus)
+        inputRungsStatus = inputRungsStatus.subList(1, inputRungsStatus.size());
+        assertThat(ladder.getRightRungStatus())
             .containsExactlyElementsOf(inputRungsStatus);
     }
 
     @Test
-    @DisplayName("사다리의 높이를 전달받을 수 있다.")
-    void getHeightTest() {
+    @DisplayName("Ladder 내의 모든 Line의 길이가 같지 않다면 예외가 발생한다.")
+    void invalidHeightTest() {
         // given
-        final List<Boolean> inputRungsStatus = Arrays.asList(true, false, false, false, true, true);
-        final Ladder ladder = Ladder.from(inputRungsStatus);
+        final Line line1 = Line.of(Arrays.asList(true, false, true), Arrays.asList(false, false, false));
+        final Line line2 = Line.of(Arrays.asList(false, false, false, false, false),
+                                   Arrays.asList(true, false, false, true, true));
         // when
-        final int height = ladder.getHeight();
+        List<Line> lineCollection = Arrays.asList(line1, line2);
         // then
-        assertThat(height)
-            .isEqualTo(inputRungsStatus.size());
-    }
-
-    @Test
-    @DisplayName("특정 위치에 사다리가 있는지 없는지 확인할 수 있다.")
-    void checkRungExistTest() {
-        // given
-        final List<Boolean> inputRungsStatus = Arrays.asList(true, false, false, false, true, true);
-        final Ladder ladder = Ladder.from(inputRungsStatus);
-        // when
-        // then
-        assertAll(
-            () -> assertThat(ladder.checkRungExistAt(0))
-                .isEqualTo(inputRungsStatus.get(0)),
-            () -> assertThat(ladder.checkRungExistAt(1))
-                .isEqualTo(inputRungsStatus.get(1)),
-            () -> assertThat(ladder.checkRungExistAt(2))
-                .isEqualTo(inputRungsStatus.get(2)),
-            () -> assertThat(ladder.checkRungExistAt(3))
-                .isEqualTo(inputRungsStatus.get(3)),
-            () -> assertThat(ladder.checkRungExistAt(4))
-                .isEqualTo(inputRungsStatus.get(4)),
-            () -> assertThat(ladder.checkRungExistAt(5))
-                .isEqualTo(inputRungsStatus.get(5))
-        );
+        assertThatThrownBy(() -> new Ladder(lineCollection))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage(Errors.ALL_LINE_MUST_HAVE_SAME_HEIGHT);
     }
 
 
