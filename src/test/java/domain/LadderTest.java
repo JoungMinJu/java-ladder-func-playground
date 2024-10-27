@@ -50,5 +50,26 @@ class LadderTest {
             .hasMessage(Errors.ALL_LINE_MUST_HAVE_SAME_HEIGHT);
     }
 
+    @Test
+    @DisplayName("사다리를 탄 결과를 받을 수 있다.")
+    void resultTest() {
+        // given
+        List<List<Boolean>> inputRungsStatus = Arrays.asList(
+            Arrays.asList(false, false, false, false), // first Line의 임시 left rung status
+            Arrays.asList(true, false, false, true),
+            Arrays.asList(false, false, true, false),
+            Arrays.asList(true, true, false, true),
+            Arrays.asList(false, false, false, false)
+        );
+        // when
+        List<Line> lineCollection = new ArrayList<>();
+        for (int i = 1; i < inputRungsStatus.size(); i++) {
+            lineCollection.add(Line.of(inputRungsStatus.get(i - 1), inputRungsStatus.get(i)));
+        }
+        final Ladder ladder = new Ladder(lineCollection);
+        // then
+        final List<Integer> result = ladder.getResult();
+        assertThat(result).isEqualTo(List.of(2, 1, 3, 0));
+    }
 
 }

@@ -23,4 +23,8 @@ public class Point {
         return this.right;
     }
 
+    public boolean isConnectedToLeftLadder() {
+        return this.left;
+    }
+
 }

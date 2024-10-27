@@ -35,6 +35,37 @@ public class Ladder {
         return rightRungStatus;
     }
 
+    public int getHeight() {
+        return this.lines.get(0).getHeight();
+    }
 
+    public List<Integer> getResult() {
+        List<Integer> result = new ArrayList<>();
+        int height = this.getHeight();
 
+        for (int nowIndex = 0; nowIndex < lines.size(); nowIndex++) {
+            int finalIndex = calculateTargetIndex(nowIndex, height);
+            result.add(finalIndex);
+        }
+        return result;
+    }
+
+    private int calculateTargetIndex(int startIndex, int height) {
+        int targetIndex = startIndex;
+        for (int nowPosition = height - 1; nowPosition >= 0; nowPosition--) {
+            targetIndex = getNextIndex(targetIndex, nowPosition);
+        }
+        return targetIndex;
+    }
+
+    private int getNextIndex(int currentIndex, int position) {
+        Line nowLine = lines.get(currentIndex);
+
+        if (nowLine.isConnectedToLeftLineAt(position)) {
+            return currentIndex - 1;
+        } else if (nowLine.isConnectedToRightLineAt(position)) {
+            return currentIndex + 1;
+        }
+        return currentIndex;
+    }
 }

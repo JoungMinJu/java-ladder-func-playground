@@ -40,4 +40,14 @@ public class Line {
         return this.points.size();
     }
 
+    public boolean isConnectedToLeftLineAt(int position) {
+        final Point nowPoint = this.points.get(position);
+        return nowPoint.isConnectedToLeftLadder();
+    }
+
+    public boolean isConnectedToRightLineAt(int position) {
+        final Point nowPoint = this.points.get(position);
+        return nowPoint.isConnectedToRightLadder();
+    }
+
 }
