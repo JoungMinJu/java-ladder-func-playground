@@ -26,6 +26,7 @@ public class LadderGameController {
 
         Ladder ladder = laddersService.createLadder(countOfLadders, height);
         outputView.printStatusOfLadders(ladder.getRightRungStatus(), height.value());
+        System.out.println(ladder);
     }
 
     private CountOfLadders getCountOfLadders() {

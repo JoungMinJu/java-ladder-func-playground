@@ -46,18 +46,21 @@ public class LadderService {
                                List<Boolean> nowLineLeftStatus) {
         final List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLadders, height,
                                                                           nowLineLeftStatus);
+        if (index == 0) {
+            nowLineLeftStatus = createEmptyStatus(height);
+        }
         return Line.of(nowLineLeftStatus, nowLineRightStatus);
     }
 
     private List<Boolean> createNowLineRightStatus(int index, CountOfLadders countOfLadders, Height height,
                                                    List<Boolean> prevLineRightStatus) {
         if (index == countOfLadders.value() - 1) {
-            return createRightStatusOfLastLine(height);
+            return createEmptyStatus(height);
         }
         return rungsBuilder.buildAndGetRungsStatus(prevLineRightStatus);
     }
 
-    private List<Boolean> createRightStatusOfLastLine(Height height) {
+    private List<Boolean> createEmptyStatus(Height height) {
         return IntStream.range(0, height.value())
             .mapToObj(i -> false)
             .collect(Collectors.toList());

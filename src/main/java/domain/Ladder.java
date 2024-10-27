@@ -35,4 +35,6 @@ public class Ladder {
         return rightRungStatus;
     }
 
+
+
 }
