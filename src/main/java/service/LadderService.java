@@ -1,6 +1,6 @@
 package service;
 
-import domain.CountOfLadders;
+import domain.CountOfLine;
 import domain.Height;
 import domain.Ladder;
 import domain.Line;
@@ -18,17 +18,17 @@ public class LadderService {
         this.rungsBuilder = rungsBuilder;
     }
 
-    public Ladder createLadder(CountOfLadders countOfLadders, Height height) {
-        final List<Line> lineCollection = createLineCollection(countOfLadders, height);
+    public Ladder createLadder(CountOfLine countOfLine, Height height) {
+        final List<Line> lineCollection = createLineCollection(countOfLine, height);
         return new Ladder(lineCollection);
     }
 
-    private List<Line> createLineCollection(CountOfLadders countOfLadders, Height height) {
+    private List<Line> createLineCollection(CountOfLine countOfLine, Height height) {
         final List<Line> lineCollection = new ArrayList<>();
 
-        for (int index = 0; index < countOfLadders.value(); index++) {
+        for (int index = 0; index < countOfLine.value(); index++) {
             final List<Boolean> prevLineRightStatus = getPrevLineRightStatus(lineCollection, index, height);
-            final Line nowLine = createNowLine(index, height, countOfLadders, prevLineRightStatus);
+            final Line nowLine = createNowLine(index, height, countOfLine, prevLineRightStatus);
             lineCollection.add(nowLine);
         }
         return lineCollection;
@@ -42,9 +42,9 @@ public class LadderService {
         return prevLine.getRightStatus();
     }
 
-    private Line createNowLine(int index, Height height, CountOfLadders countOfLadders,
+    private Line createNowLine(int index, Height height, CountOfLine countOfLine,
                                List<Boolean> nowLineLeftStatus) {
-        final List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLadders, height,
+        final List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLine, height,
                                                                           nowLineLeftStatus);
         if (index == 0) {
             nowLineLeftStatus = createEmptyStatus(height);
@@ -52,9 +52,9 @@ public class LadderService {
         return Line.of(nowLineLeftStatus, nowLineRightStatus);
     }
 
-    private List<Boolean> createNowLineRightStatus(int index, CountOfLadders countOfLadders, Height height,
+    private List<Boolean> createNowLineRightStatus(int index, CountOfLine countOfLine, Height height,
                                                    List<Boolean> prevLineRightStatus) {
-        if (index == countOfLadders.value() - 1) {
+        if (index == countOfLine.value() - 1) {
             return createEmptyStatus(height);
         }
         return rungsBuilder.buildAndGetRungsStatus(prevLineRightStatus);

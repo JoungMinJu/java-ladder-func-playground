@@ -2,9 +2,9 @@ package domain;
 
 import util.Errors;
 
-public record CountOfLadders(int value) {
+public record CountOfLine(int value) {
 
-    public CountOfLadders {
+    public CountOfLine {
         validate(value);
     }
 

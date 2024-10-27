@@ -1,6 +1,6 @@
 package controller;
 
-import domain.CountOfLadders;
+import domain.CountOfLine;
 import domain.Height;
 import domain.Ladder;
 import domain.RungsBuilder;
@@ -21,18 +21,18 @@ public class LadderGameController {
     }
 
     public void start() {
-        CountOfLadders countOfLadders = getCountOfLadders();
+        CountOfLine countOfLine = getcountOfLine();
         Height height = getHeight();
 
-        Ladder ladder = laddersService.createLadder(countOfLadders, height);
+        Ladder ladder = laddersService.createLadder(countOfLine, height);
         outputView.printStatusOfLadders(ladder.getRightRungStatus(), height.value());
-        System.out.println(ladder);
+        outputView.printResult(ladder.getResult());
     }
 
-    private CountOfLadders getCountOfLadders() {
-        outputView.printInputCountOfLaddersGuide();
-        final int valueOfCountOfLadders = inputView.getUserIntegerInput();
-        return new CountOfLadders(valueOfCountOfLadders);
+    private CountOfLine getcountOfLine() {
+        outputView.printInputCountOfLineGuide();
+        final int valueOfCountOfLine = inputView.getUserIntegerInput();
+        return new CountOfLine(valueOfCountOfLine);
     }
 
     private Height getHeight() {

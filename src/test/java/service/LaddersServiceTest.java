@@ -2,7 +2,7 @@ package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.CountOfLadders;
+import domain.CountOfLine;
 import domain.Height;
 import domain.Ladder;
 import domain.RungsBuilder;
@@ -31,11 +31,11 @@ class LaddersServiceTest {
     void test() {
         // given
         final Height height = new Height(5);
-        final CountOfLadders countOfLadders = new CountOfLadders(3);
+        final CountOfLine countOfLine = new CountOfLine(3);
         final TestRungsBuilder testRungsBuilder = new TestRungsBuilder();
         // when
         final LadderService laddersService = new LadderService(testRungsBuilder);
-        final Ladder ladder = laddersService.createLadder(countOfLadders, height);
+        final Ladder ladder = laddersService.createLadder(countOfLine, height);
         // then
         assertThat(ladder.getRightRungStatus())
             .isEqualTo(
