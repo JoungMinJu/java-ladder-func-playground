@@ -13,7 +13,7 @@ public class Point {
         this.right = right;
     }
 
-    public void validateIsConnected(boolean left, boolean right) {
+    private void validateIsConnected(boolean left, boolean right) {
         if(left && right) {
             throw new IllegalArgumentException(Errors.ADJACENT_LADDERS_CANNOT_HAVE_RUNG_AT_SAME_POSITION);
         }

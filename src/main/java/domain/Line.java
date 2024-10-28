@@ -23,7 +23,7 @@ public class Line {
         return new Line(points);
     }
 
-    public static void validateHeight(List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
+    private static void validateHeight(List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
         if (leftRungsStatus.size() != rightRungsStatus.size()) {
             throw new IllegalArgumentException(Errors.RUNG_STATUS_LENGTH_MUST_MATCH);
         }

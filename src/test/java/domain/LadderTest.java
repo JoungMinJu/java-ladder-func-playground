@@ -61,14 +61,14 @@ class LadderTest {
             Arrays.asList(true, true, false, true),
             Arrays.asList(false, false, false, false)
         );
-        // when
         List<Line> lineCollection = new ArrayList<>();
         for (int i = 1; i < inputRungsStatus.size(); i++) {
             lineCollection.add(Line.of(inputRungsStatus.get(i - 1), inputRungsStatus.get(i)));
         }
         final Ladder ladder = new Ladder(lineCollection);
-        // then
+        // when
         final List<Integer> result = ladder.getResult();
+        // then
         assertThat(result).isEqualTo(List.of(2, 1, 3, 0));
     }
 

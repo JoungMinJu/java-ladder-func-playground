@@ -13,11 +13,11 @@ public class Ladder {
         this.lines = new ArrayList<>(lines);
     }
 
-    private static void validate(List<Line> lines) {
+    private void validate(List<Line> lines) {
         validateLaddersHeight(lines);
     }
 
-    private static void validateLaddersHeight(List<Line> lines) {
+    private void validateLaddersHeight(List<Line> lines) {
         boolean allSameHeight = lines.stream()
             .map(Line::getHeight)
             .distinct()
@@ -28,11 +28,9 @@ public class Ladder {
     }
 
     public List<List<Boolean>> getRightRungStatus() {
-        List<List<Boolean>> rightRungStatus = new ArrayList<>();
-        for (Line line : lines) {
-            rightRungStatus.add(line.getRightStatus());
-        }
-        return rightRungStatus;
+        return lines.stream()
+            .map(Line::getRightStatus)
+            .toList();
     }
 
     public int getHeight() {
