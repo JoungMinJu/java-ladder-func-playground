@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import util.Errors;
 
 public class Ladder {
@@ -15,6 +16,7 @@ public class Ladder {
 
     private void validate(List<Line> lines) {
         validateLaddersHeight(lines);
+        validatePointStatus(lines);
     }
 
     private void validateLaddersHeight(List<Line> lines) {
@@ -25,6 +27,27 @@ public class Ladder {
         if (!allSameHeight) {
             throw new IllegalArgumentException(Errors.ALL_LINE_MUST_HAVE_SAME_HEIGHT);
         }
+    }
+
+    private void validatePointStatus(List<Line> lines) {
+        for (int index = 0; index < lines.size()-1; index++) {
+            Line nowLine = lines.get(index);
+            Line nextLine = lines.get(index+1);
+            validateRungInSamePosition(nowLine, nextLine);
+        }
+    }
+
+    private void validateRungInSamePosition(Line nowLine, Line nextLine) {
+        if (!isRungInSamePosition(nowLine, nextLine)) {
+            throw new IllegalArgumentException(Errors.ADJACENT_POINTER_STATUS_MATCH);
+        }
+    }
+
+    private boolean isRungInSamePosition(Line nowLine, Line nextLine) {
+        final int maxPosition = nowLine.getHeight();
+        return IntStream.range(0, maxPosition)
+            .allMatch(
+                position -> nowLine.isConnectedToRightLineAt(position) == nextLine.isConnectedToLeftLineAt(position));
     }
 
     public List<List<Boolean>> getRightRungStatus() {

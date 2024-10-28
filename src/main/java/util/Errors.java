@@ -11,6 +11,6 @@ public class Errors {
     public static final String ADJACENT_LADDERS_CANNOT_HAVE_RUNG_AT_SAME_POSITION = "인접한 두 사다리는 같은 위치에 가로줄을 가질 수 없습니다.";
     public static final String INPUT_IS_NOT_INTEGER = "정수가 입력되어야 합니다.";
     public static final String RUNG_STATUS_LENGTH_MUST_MATCH = "Line의 left rung status의 길이와 right rung status의 길이는 일치해야합니다.";
-
+    public static final String ADJACENT_POINTER_STATUS_MATCH = "인접한 line의 경우 좌측 line의 pointe의 right status와 우측 line의 left status 값은 일치해야합니다.";
 
 }

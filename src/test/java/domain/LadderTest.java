@@ -72,4 +72,18 @@ class LadderTest {
         assertThat(result).isEqualTo(List.of(2, 1, 3, 0));
     }
 
+    @Test
+    @DisplayName("인접한 line의 경우 좌측 point의 right status 값과 우측 point의 left status 값이 일치하지 않음 예외가 발생한다.")
+    void invalidRungTest() {
+        // given
+        Line line1 = Line.of(Arrays.asList(false, false, false), Arrays.asList(false, true, true));
+        Line line2 = Line.of(Arrays.asList(false, false, true), Arrays.asList(false, false, false));
+        List<Line> lineCollection = new ArrayList<>(List.of(line1, line2));
+        // when
+        // then
+        assertThatThrownBy(() -> new Ladder(lineCollection))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage(Errors.ADJACENT_POINTER_STATUS_MATCH);
+    }
+
 }
