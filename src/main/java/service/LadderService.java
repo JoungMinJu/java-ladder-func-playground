@@ -7,8 +7,10 @@ import domain.Line;
 import domain.RungsBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import util.Errors;
 
 public class LadderService {
 
@@ -18,17 +20,19 @@ public class LadderService {
         this.rungsBuilder = rungsBuilder;
     }
 
-    public Ladder createLadder(CountOfLine countOfLine, Height height) {
-        final List<Line> lineCollection = createLineCollection(countOfLine, height);
+    public Ladder createLadder(CountOfLine countOfLine, Height height, List<String> names, List<String> outcomes) {
+        final List<Line> lineCollection = createLineCollection(countOfLine, height, names, outcomes);
         return new Ladder(lineCollection);
     }
 
-    private List<Line> createLineCollection(CountOfLine countOfLine, Height height) {
+    private List<Line> createLineCollection(CountOfLine countOfLine, Height height, List<String> names, List<String> outcomes) {
         final List<Line> lineCollection = new ArrayList<>();
 
         for (int index = 0; index < countOfLine.value(); index++) {
             final List<Boolean> prevLineRightStatus = getPrevLineRightStatus(lineCollection, index, height);
-            final Line nowLine = createNowLine(index, height, countOfLine, prevLineRightStatus);
+            final String name = names.get(index);
+            final String outcome = outcomes.get(index);
+            final Line nowLine = createNowLine(index, height, countOfLine, prevLineRightStatus, name, outcome);
             lineCollection.add(nowLine);
         }
         return lineCollection;
@@ -43,13 +47,13 @@ public class LadderService {
     }
 
     private Line createNowLine(int index, Height height, CountOfLine countOfLine,
-                               List<Boolean> nowLineLeftStatus) {
+                               List<Boolean> nowLineLeftStatus, String name, String outcome) {
         final List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLine, height,
                                                                           nowLineLeftStatus);
         if (index == 0) {
             nowLineLeftStatus = createEmptyStatus(height);
         }
-        return Line.of(nowLineLeftStatus, nowLineRightStatus);
+        return Line.of(name, outcome, nowLineLeftStatus, nowLineRightStatus);
     }
 
     private List<Boolean> createNowLineRightStatus(int index, CountOfLine countOfLine, Height height,
@@ -64,5 +68,35 @@ public class LadderService {
         return IntStream.range(0, height.value())
             .mapToObj(i -> false)
             .collect(Collectors.toList());
+    }
+
+    public Map<String, String> getResultToPrint(Map<String, String> result, String targetName) {
+        if (isAllMode(targetName)) {
+            return result;
+        }
+        validateTargetName(result, targetName);
+        return Map.of(targetName, result.get(targetName));
+    }
+
+    private boolean isAllMode(String targetName) {
+        return targetName.equals("all");
+    }
+
+    private void validateTargetName(Map<String, String> result, String targetName) {
+        if (!result.containsKey(targetName)) {
+            throw new IllegalArgumentException(Errors.TARGET_NAME_MUST_BE_IN_NAMES);
+        }
+    }
+
+    public CountOfLine getcountOfLine(List<String> names, List<String> outcomes) {
+        validateCountOfLine(names, outcomes);
+        final int valueOfCountOfLine = names.size();
+        return new CountOfLine(valueOfCountOfLine);
+    }
+
+    private void validateCountOfLine(List<String> names, List<String> outcomes) {
+        if (names.size() != outcomes.size()) {
+            throw new IllegalArgumentException(Errors.NAMES_AND_OUTCOMES_SIZE_IS_NOT_SAME);
+        }
     }
 }

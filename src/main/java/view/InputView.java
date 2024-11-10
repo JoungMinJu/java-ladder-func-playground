@@ -1,6 +1,8 @@
 package view;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import util.Errors;
 
@@ -17,5 +19,14 @@ public class InputView {
         }
     }
 
+    public List<String> getStringList() {
+        final String input = getString();
+        return Arrays.asList(input.split(","));
+    }
+
+    public String getString() {
+        scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
 
 }

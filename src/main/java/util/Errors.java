@@ -12,5 +12,7 @@ public class Errors {
     public static final String INPUT_IS_NOT_INTEGER = "정수가 입력되어야 합니다.";
     public static final String RUNG_STATUS_LENGTH_MUST_MATCH = "Line의 left rung status의 길이와 right rung status의 길이는 일치해야합니다.";
     public static final String ADJACENT_POINTER_STATUS_MATCH = "인접한 line의 경우 좌측 line의 pointe의 right status와 우측 line의 left status 값은 일치해야합니다.";
+    public static final String NAMES_AND_OUTCOMES_SIZE_IS_NOT_SAME = "참여할 사람의 수와 결과의 수는 동일해야합니다.";
+    public static final String TARGET_NAME_MUST_BE_IN_NAMES = "결과를 조회하고 싶은 이름이 참여자 명단에 없습니다.";
 
 }
