@@ -6,13 +6,18 @@ import util.Errors;
 
 public class Line {
 
+    private final String name;
+    private final String outcome;
+
     private final List<Point> points;
 
-    private Line(List<Point> points) {
+    private Line(String name, String outcome, List<Point> points) {
+        this.name = name;
+        this.outcome = outcome;
         this.points = points;
     }
 
-    public static Line of(List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
+    public static Line of(String name, String outcome, List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
         validateHeight(leftRungsStatus, rightRungsStatus);
 
         int maxPosition = leftRungsStatus.size();
@@ -20,7 +25,7 @@ public class Line {
         for (int position = 0; position < maxPosition; position++) {
             points.add(new Point(leftRungsStatus.get(position), rightRungsStatus.get(position)));
         }
-        return new Line(points);
+        return new Line(name, outcome, points);
     }
 
     private static void validateHeight(List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
@@ -28,6 +33,7 @@ public class Line {
             throw new IllegalArgumentException(Errors.RUNG_STATUS_LENGTH_MUST_MATCH);
         }
     }
+
     public List<Boolean> getRightStatus() {
         List<Boolean> rightStatus = new ArrayList<>();
         for (Point point : points) {
@@ -38,6 +44,14 @@ public class Line {
 
     public int getHeight() {
         return this.points.size();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOutcome() {
+        return outcome;
     }
 
     public boolean isConnectedToLeftLineAt(int position) {

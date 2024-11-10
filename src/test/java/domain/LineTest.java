@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import util.Errors;
 
 class LineTest {
+    private static final String name = "이름";
+    private static final String outcome = "결과";
 
     @Test
     @DisplayName("Line의 우측 사다리 유무를 전달받을 수 있다")
@@ -19,7 +21,7 @@ class LineTest {
         final List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
 
         // when
-        final Line line = Line.of(inputLeftRungStatus, inputRightRungStatus);
+        final Line line = Line.of(name, outcome, inputLeftRungStatus, inputRightRungStatus);
         // then
         assertThat(line.getRightStatus())
             .containsExactlyElementsOf(inputRightRungStatus);
@@ -33,7 +35,7 @@ class LineTest {
         final List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
         // when
         // then
-        assertThatThrownBy(() -> Line.of(inputLeftRungStatus, inputRightRungStatus))
+        assertThatThrownBy(() -> Line.of(name, outcome, inputLeftRungStatus, inputRightRungStatus))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(Errors.RUNG_STATUS_LENGTH_MUST_MATCH);
     }
@@ -46,7 +48,7 @@ class LineTest {
         final List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
         // when
         // then
-        assertThatThrownBy(() -> Line.of(inputLeftRungStatus, inputRightRungStatus))
+        assertThatThrownBy(() -> Line.of(name, outcome, inputLeftRungStatus, inputRightRungStatus))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(Errors.ADJACENT_LADDERS_CANNOT_HAVE_RUNG_AT_SAME_POSITION);
     }
