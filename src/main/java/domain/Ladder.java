@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 import util.Errors;
 
@@ -30,9 +32,9 @@ public class Ladder {
     }
 
     private void validatePointStatus(List<Line> lines) {
-        for (int index = 0; index < lines.size()-1; index++) {
+        for (int index = 0; index < lines.size() - 1; index++) {
             Line nowLine = lines.get(index);
-            Line nextLine = lines.get(index+1);
+            Line nextLine = lines.get(index + 1);
             validateRungInSamePosition(nowLine, nextLine);
         }
     }
@@ -60,13 +62,15 @@ public class Ladder {
         return this.lines.get(0).getHeight();
     }
 
-    public List<Integer> getResult() {
-        List<Integer> result = new ArrayList<>();
+    public Map<String, String> getResult() {
+        Map<String, String> result = new LinkedHashMap<>();
         int height = this.getHeight();
 
         for (int nowIndex = 0; nowIndex < lines.size(); nowIndex++) {
             int finalIndex = calculateTargetIndex(nowIndex, height);
-            result.add(finalIndex);
+            final String name = getNameOfLine(nowIndex);
+            final String outcome = getOutcomeOfLine(finalIndex);
+            result.put(name, outcome);
         }
         return result;
     }
@@ -88,5 +92,13 @@ public class Ladder {
             return currentIndex + 1;
         }
         return currentIndex;
+    }
+
+    private String getNameOfLine(int index) {
+        return lines.get(index).getName();
+    }
+
+    private String getOutcomeOfLine(int index) {
+        return lines.get(index).getOutcome();
     }
 }
