@@ -79,7 +79,7 @@ public class LadderService {
     }
 
     private boolean isAllMode(String targetName) {
-        return targetName.equals("all");
+        return "all".equals(targetName);
     }
 
     private void validateTargetName(Map<String, String> result, String targetName) {
