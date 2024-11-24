@@ -4,6 +4,7 @@ import domain.CountOfLine;
 import domain.Height;
 import domain.Ladder;
 import domain.Line;
+import domain.Player;
 import domain.RungsBuilder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,19 +23,21 @@ public class LadderService {
     }
 
     public Ladder createLadder(Height height, List<String> names, List<String> outcomes) {
-        CountOfLine countOfLine = getcountOfLine(names, outcomes);
-        List<Line> lineCollection = createLineCollection(countOfLine, height, names, outcomes);
+        final List<Player> players = getPlayers(names);
+        CountOfLine countOfLine = getcountOfLine(players, outcomes);
+        List<Line> lineCollection = createLineCollection(countOfLine, height, players, outcomes);
         return new Ladder(lineCollection);
     }
 
-    private List<Line> createLineCollection(CountOfLine countOfLine, Height height, List<String> names, List<String> outcomes) {
-         List<Line> lineCollection = new ArrayList<>();
+    private List<Line> createLineCollection(CountOfLine countOfLine, Height height, List<Player> players,
+                                            List<String> outcomes) {
+        List<Line> lineCollection = new ArrayList<>();
 
         for (int index = 0; index < countOfLine.value(); index++) {
-             List<Boolean> prevLineRightStatus = getPrevLineRightStatus(lineCollection, index, height);
-             String name = names.get(index);
-             String outcome = outcomes.get(index);
-             Line nowLine = createNowLine(index, height, countOfLine, prevLineRightStatus, name, outcome);
+            List<Boolean> prevLineRightStatus = getPrevLineRightStatus(lineCollection, index, height);
+            Player player = players.get(index);
+            String outcome = outcomes.get(index);
+            Line nowLine = createNowLine(index, height, countOfLine, prevLineRightStatus, player, outcome);
             lineCollection.add(nowLine);
         }
         return lineCollection;
@@ -44,18 +47,18 @@ public class LadderService {
         if (index == 0) {
             return rungsBuilder.buildTemporaryRungsStatus(height.value());
         }
-         Line prevLine = lineCollection.get(index - 1);
+        Line prevLine = lineCollection.get(index - 1);
         return prevLine.getRightStatus();
     }
 
     private Line createNowLine(int index, Height height, CountOfLine countOfLine,
-                               List<Boolean> nowLineLeftStatus, String name, String outcome) {
-         List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLine, height,
-                                                                          nowLineLeftStatus);
+                               List<Boolean> nowLineLeftStatus, Player player, String outcome) {
+        List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLine, height,
+                                                                    nowLineLeftStatus);
         if (index == 0) {
             nowLineLeftStatus = createEmptyStatus(height);
         }
-        return Line.of(name, outcome, nowLineLeftStatus, nowLineRightStatus);
+        return Line.of(player, outcome, nowLineLeftStatus, nowLineRightStatus);
     }
 
     private List<Boolean> createNowLineRightStatus(int index, CountOfLine countOfLine, Height height,
@@ -90,15 +93,21 @@ public class LadderService {
         }
     }
 
-    private CountOfLine getcountOfLine(List<String> names, List<String> outcomes) {
-        validateCountOfLine(names, outcomes);
-         int valueOfCountOfLine = names.size();
+    private CountOfLine getcountOfLine(List<Player> players, List<String> outcomes) {
+        validateCountOfLine(players, outcomes);
+        int valueOfCountOfLine = players.size();
         return new CountOfLine(valueOfCountOfLine);
     }
 
-    private void validateCountOfLine(List<String> names, List<String> outcomes) {
-        if (names.size() != outcomes.size()) {
-            throw new IllegalArgumentException(Errors.NAMES_AND_OUTCOMES_SIZE_IS_NOT_SAME);
+    private void validateCountOfLine(List<Player> players, List<String> outcomes) {
+        if (players.size() != outcomes.size()) {
+            throw new IllegalArgumentException(Errors.PLAYERS_AND_OUTCOMES_SIZE_IS_NOT_SAME);
         }
+    }
+
+    private List<Player> getPlayers(List<String> names) {
+        return names.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 }

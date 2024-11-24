@@ -6,18 +6,18 @@ import util.Errors;
 
 public class Line {
 
-    private final String name;
+    private final Player player;
     private final String outcome;
 
     private final List<Point> points;
 
-    private Line(String name, String outcome, List<Point> points) {
-        this.name = name;
+    private Line(Player player, String outcome, List<Point> points) {
+        this.player = player;
         this.outcome = outcome;
         this.points = points;
     }
 
-    public static Line of(String name, String outcome, List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
+    public static Line of(Player player, String outcome, List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
         validateHeight(leftRungsStatus, rightRungsStatus);
 
         int maxPosition = leftRungsStatus.size();
@@ -25,7 +25,7 @@ public class Line {
         for (int position = 0; position < maxPosition; position++) {
             points.add(new Point(leftRungsStatus.get(position), rightRungsStatus.get(position)));
         }
-        return new Line(name, outcome, points);
+        return new Line(player, outcome, points);
     }
 
     private static void validateHeight(List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
@@ -47,7 +47,7 @@ public class Line {
     }
 
     public String getName() {
-        return name;
+        return player.getName();
     }
 
     public String getOutcome() {

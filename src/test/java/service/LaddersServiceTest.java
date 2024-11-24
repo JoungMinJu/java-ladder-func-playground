@@ -64,7 +64,7 @@ class LaddersServiceTest {
         // then
         assertThatThrownBy(() -> laddersService.createLadder(height, names, outcomes))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage(Errors.NAMES_AND_OUTCOMES_SIZE_IS_NOT_SAME);
+            .hasMessage(Errors.PLAYERS_AND_OUTCOMES_SIZE_IS_NOT_SAME);
     }
 
     @Test
@@ -110,5 +110,19 @@ class LaddersServiceTest {
         assertThatThrownBy(() -> laddersService.getResultToPrint(result, targetName))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(Errors.TARGET_NAME_MUST_BE_IN_NAMES);
+    }
+
+    @Test
+    @DisplayName("참가자 이름이 다섯글자가 넘어가면 예외가 발생한다.")
+    void invalidNameTest() {
+        // given
+        Height height = new Height(5);
+        List<String> names = List.of("일이삼사오육", "이");
+        List<String> outcomes = List.of("1000", "2000", "3000");
+        // when
+        // then
+        assertThatThrownBy(() -> laddersService.createLadder(height, names, outcomes))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage(Errors.NAME_IS_TOO_LONG);
     }
 }
