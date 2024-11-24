@@ -21,8 +21,9 @@ public class LadderService {
         this.rungsBuilder = rungsBuilder;
     }
 
-    public Ladder createLadder(CountOfLine countOfLine, Height height, List<String> names, List<String> outcomes) {
-         List<Line> lineCollection = createLineCollection(countOfLine, height, names, outcomes);
+    public Ladder createLadder(Height height, List<String> names, List<String> outcomes) {
+        CountOfLine countOfLine = getcountOfLine(names, outcomes);
+        List<Line> lineCollection = createLineCollection(countOfLine, height, names, outcomes);
         return new Ladder(lineCollection);
     }
 
@@ -89,7 +90,7 @@ public class LadderService {
         }
     }
 
-    public CountOfLine getcountOfLine(List<String> names, List<String> outcomes) {
+    private CountOfLine getcountOfLine(List<String> names, List<String> outcomes) {
         validateCountOfLine(names, outcomes);
          int valueOfCountOfLine = names.size();
         return new CountOfLine(valueOfCountOfLine);

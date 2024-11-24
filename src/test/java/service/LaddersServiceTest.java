@@ -3,7 +3,6 @@ package service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.CountOfLine;
 import domain.Height;
 import domain.Ladder;
 import domain.RungsBuilder;
@@ -17,8 +16,7 @@ import util.Errors;
 class LaddersServiceTest {
 
     final static TestRungsBuilder testRungsBuilder = new TestRungsBuilder();
-     static LadderService laddersService = new LadderService(testRungsBuilder);
-
+    static LadderService laddersService = new LadderService(testRungsBuilder);
 
 
     static class TestRungsBuilder implements RungsBuilder {
@@ -30,7 +28,7 @@ class LaddersServiceTest {
 
         @Override
         public List<Boolean> buildTemporaryRungsStatus(int height) {
-            return Arrays.asList(true,false, true, false, true);
+            return Arrays.asList(true, false, true, false, true);
         }
     }
 
@@ -38,16 +36,16 @@ class LaddersServiceTest {
     @DisplayName("createLadders()에선 RungsBuilder로 각 줄의 오른쪽 rungs 유무를 받고 이를 활용해 Ladders 객체를 만든다.")
     void test() {
         // given
-         Height height = new Height(5);
-         CountOfLine countOfLine = new CountOfLine(3);
+        Height height = new Height(5);
         List<String> names = Arrays.asList("일번", "이번", "삼번", "사번");
         List<String> outcomes = Arrays.asList("100", "200", "300", "400");
         // when
-        Ladder ladder = laddersService.createLadder(countOfLine, height, names, outcomes);
+        Ladder ladder = laddersService.createLadder(height, names, outcomes);
         // then
         assertThat(ladder.getRightRungStatus())
             .isEqualTo(
                 Arrays.asList(
+                    Arrays.asList(false, false, false, false, false),
                     Arrays.asList(false, false, false, false, false),
                     Arrays.asList(false, false, false, false, false),
                     Arrays.asList(false, false, false, false, false)
@@ -59,25 +57,14 @@ class LaddersServiceTest {
     @DisplayName("이름과 결과의 사이즈가 다르면 예외가 발생한다.")
     void invalidCountOfLadderTest() {
         // given
+        Height height = new Height(5);
         List<String> names = List.of("일", "이");
         List<String> outcomes = List.of("1000", "2000", "3000");
         // when
         // then
-        assertThatThrownBy(() -> laddersService.getcountOfLine(names, outcomes))
+        assertThatThrownBy(() -> laddersService.createLadder(height, names, outcomes))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(Errors.NAMES_AND_OUTCOMES_SIZE_IS_NOT_SAME);
-    }
-
-    @Test
-    @DisplayName("이름과 결과의 사이즈는 곧 사다리의 개수이다.")
-    void getCountOfLadderTest() {
-        // given
-        List<String> names = List.of("일", "이", "삼");
-        List<String> outcomes = List.of("1000", "2000", "3000");
-        // when
-        CountOfLine countOfLine = laddersService.getcountOfLine(names, outcomes);
-        // then
-        assertThat(countOfLine.value()).isEqualTo(names.size());
     }
 
     @Test

@@ -25,10 +25,9 @@ public class LadderGameController {
     public void start() {
         List<String> names = getNames();
         List<String> outcomes = getOutcomes();
-        CountOfLine countOfLine = laddersService.getcountOfLine(names, outcomes);
         Height height = getHeight();
 
-        Ladder ladder = laddersService.createLadder(countOfLine, height, names, outcomes);
+        Ladder ladder = laddersService.createLadder(height, names, outcomes);
         outputView.printStatusOfLadders(names, outcomes, ladder.getRightRungStatus(), height.value());
         printResult(ladder.getResult());
     }
