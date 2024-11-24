@@ -46,14 +46,14 @@ public class LadderGameController {
 
     private Height getHeight() {
         outputView.printInputHeightGuide();
-        final int valueOfHeight = inputView.getUserIntegerInput();
+         int valueOfHeight = inputView.getUserIntegerInput();
         return new Height(valueOfHeight);
     }
 
     private void printResult(Map<String, String> result) {
         outputView.printInputTargetName();
-        final String targetName = inputView.getString();
-        final Map<String, String> resultToPrint = laddersService.getResultToPrint(result, targetName);
+         String targetName = inputView.getString();
+         Map<String, String> resultToPrint = laddersService.getResultToPrint(result, targetName);
         outputView.printResult(resultToPrint);
     }
 

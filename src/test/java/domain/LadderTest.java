@@ -32,7 +32,7 @@ class LadderTest {
         for (int i = 1; i < inputRungsStatus.size(); i++) {
             lineCollection.add(Line.of(name, outcome, inputRungsStatus.get(i - 1), inputRungsStatus.get(i)));
         }
-        final Ladder ladder = new Ladder(lineCollection);
+         Ladder ladder = new Ladder(lineCollection);
         // then
         inputRungsStatus = inputRungsStatus.subList(1, inputRungsStatus.size());
         assertThat(ladder.getRightRungStatus())
@@ -43,8 +43,8 @@ class LadderTest {
     @DisplayName("Ladder 내의 모든 Line의 길이가 같지 않다면 예외가 발생한다.")
     void invalidHeightTest() {
         // given
-        final Line line1 = Line.of(name, outcome, Arrays.asList(true, false, true), Arrays.asList(false, false, false));
-        final Line line2 = Line.of(name, outcome, Arrays.asList(false, false, false, false, false),
+         Line line1 = Line.of(name, outcome, Arrays.asList(true, false, true), Arrays.asList(false, false, false));
+         Line line2 = Line.of(name, outcome, Arrays.asList(false, false, false, false, false),
                                    Arrays.asList(true, false, false, true, true));
         // when
         List<Line> lineCollection = Arrays.asList(line1, line2);
@@ -73,9 +73,9 @@ class LadderTest {
             String outcome = outcomes.get(i-1);
             lineCollection.add(Line.of(name, outcome, inputRungsStatus.get(i - 1), inputRungsStatus.get(i)));
         }
-        final Ladder ladder = new Ladder(lineCollection);
+         Ladder ladder = new Ladder(lineCollection);
         // when
-        final Map<String, String> result = ladder.getResult();
+         Map<String, String> result = ladder.getResult();
         // then
         assertThat(result).isEqualTo(Map.of("일번", "300",
                                             "이번", "200",

@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public List<String> getStringList() {
-        final String input = getString();
+         String input = getString();
         return Arrays.asList(input.split(","));
     }
 

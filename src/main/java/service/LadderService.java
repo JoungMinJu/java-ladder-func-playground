@@ -21,18 +21,18 @@ public class LadderService {
     }
 
     public Ladder createLadder(CountOfLine countOfLine, Height height, List<String> names, List<String> outcomes) {
-        final List<Line> lineCollection = createLineCollection(countOfLine, height, names, outcomes);
+         List<Line> lineCollection = createLineCollection(countOfLine, height, names, outcomes);
         return new Ladder(lineCollection);
     }
 
     private List<Line> createLineCollection(CountOfLine countOfLine, Height height, List<String> names, List<String> outcomes) {
-        final List<Line> lineCollection = new ArrayList<>();
+         List<Line> lineCollection = new ArrayList<>();
 
         for (int index = 0; index < countOfLine.value(); index++) {
-            final List<Boolean> prevLineRightStatus = getPrevLineRightStatus(lineCollection, index, height);
-            final String name = names.get(index);
-            final String outcome = outcomes.get(index);
-            final Line nowLine = createNowLine(index, height, countOfLine, prevLineRightStatus, name, outcome);
+             List<Boolean> prevLineRightStatus = getPrevLineRightStatus(lineCollection, index, height);
+             String name = names.get(index);
+             String outcome = outcomes.get(index);
+             Line nowLine = createNowLine(index, height, countOfLine, prevLineRightStatus, name, outcome);
             lineCollection.add(nowLine);
         }
         return lineCollection;
@@ -42,13 +42,13 @@ public class LadderService {
         if (index == 0) {
             return rungsBuilder.buildTemporaryRungsStatus(height.value());
         }
-        final Line prevLine = lineCollection.get(index - 1);
+         Line prevLine = lineCollection.get(index - 1);
         return prevLine.getRightStatus();
     }
 
     private Line createNowLine(int index, Height height, CountOfLine countOfLine,
                                List<Boolean> nowLineLeftStatus, String name, String outcome) {
-        final List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLine, height,
+         List<Boolean> nowLineRightStatus = createNowLineRightStatus(index, countOfLine, height,
                                                                           nowLineLeftStatus);
         if (index == 0) {
             nowLineLeftStatus = createEmptyStatus(height);
@@ -90,7 +90,7 @@ public class LadderService {
 
     public CountOfLine getcountOfLine(List<String> names, List<String> outcomes) {
         validateCountOfLine(names, outcomes);
-        final int valueOfCountOfLine = names.size();
+         int valueOfCountOfLine = names.size();
         return new CountOfLine(valueOfCountOfLine);
     }
 

@@ -55,12 +55,12 @@ public class Line {
     }
 
     public boolean isConnectedToLeftLineAt(int position) {
-        final Point nowPoint = this.points.get(position);
+         Point nowPoint = this.points.get(position);
         return nowPoint.isConnectedToLeftLadder();
     }
 
     public boolean isConnectedToRightLineAt(int position) {
-        final Point nowPoint = this.points.get(position);
+         Point nowPoint = this.points.get(position);
         return nowPoint.isConnectedToRightLadder();
     }
 

@@ -46,7 +46,7 @@ public class Ladder {
     }
 
     private boolean isRungInSamePosition(Line nowLine, Line nextLine) {
-        final int maxPosition = nowLine.getHeight();
+         int maxPosition = nowLine.getHeight();
         return IntStream.range(0, maxPosition)
             .allMatch(
                 position -> nowLine.isConnectedToRightLineAt(position) == nextLine.isConnectedToLeftLineAt(position));
@@ -68,8 +68,8 @@ public class Ladder {
 
         for (int nowIndex = 0; nowIndex < lines.size(); nowIndex++) {
             int finalIndex = calculateTargetIndex(nowIndex, height);
-            final String name = getNameOfLine(nowIndex);
-            final String outcome = getOutcomeOfLine(finalIndex);
+             String name = getNameOfLine(nowIndex);
+             String outcome = getOutcomeOfLine(finalIndex);
             result.put(name, outcome);
         }
         return result;

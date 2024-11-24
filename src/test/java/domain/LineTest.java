@@ -17,11 +17,11 @@ class LineTest {
     @DisplayName("Line의 우측 사다리 유무를 전달받을 수 있다")
     void getRungsStatusTest() {
         // given
-        final List<Boolean> inputLeftRungStatus = Arrays.asList(false, false, false, false, false, false);
-        final List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
+         List<Boolean> inputLeftRungStatus = Arrays.asList(false, false, false, false, false, false);
+         List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
 
         // when
-        final Line line = Line.of(name, outcome, inputLeftRungStatus, inputRightRungStatus);
+         Line line = Line.of(name, outcome, inputLeftRungStatus, inputRightRungStatus);
         // then
         assertThat(line.getRightStatus())
             .containsExactlyElementsOf(inputRightRungStatus);
@@ -31,8 +31,8 @@ class LineTest {
     @DisplayName("Line을 생성할 때, rightStatus와 leftStatus의 길이가 일치하지 않으면 에외가 발생한다.")
     void invalidLineConstructorTest() {
         // given
-        final List<Boolean> inputLeftRungStatus = Arrays.asList(false, false, false);
-        final List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
+         List<Boolean> inputLeftRungStatus = Arrays.asList(false, false, false);
+         List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
         // when
         // then
         assertThatThrownBy(() -> Line.of(name, outcome, inputLeftRungStatus, inputRightRungStatus))
@@ -44,8 +44,8 @@ class LineTest {
     @DisplayName("Line을 생성할 때, 왼쪽 오른쪽이 모두 연결된 point를 생성하려 시도하면 예외가 발생한다.")
     void invalidPointTest() {
         // given
-        final List<Boolean> inputLeftRungStatus = Arrays.asList(false, false, false, false, true, true);
-        final List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
+         List<Boolean> inputLeftRungStatus = Arrays.asList(false, false, false, false, true, true);
+         List<Boolean> inputRightRungStatus = Arrays.asList(true, false, false, false, true, true);
         // when
         // then
         assertThatThrownBy(() -> Line.of(name, outcome, inputLeftRungStatus, inputRightRungStatus))

@@ -18,7 +18,7 @@ public class RandomRungsBuilder implements RungsBuilder {
     public List<Boolean> buildAndGetRungsStatus(List<Boolean> prevRungsStatus) {
         List<Boolean> rungsStatus = new ArrayList<>();
         for (Boolean doesPrevLadderHaveRung : prevRungsStatus) {
-            final boolean nowRungsStatus = generateRungIfAbsent(doesPrevLadderHaveRung);
+             boolean nowRungsStatus = generateRungIfAbsent(doesPrevLadderHaveRung);
             rungsStatus.add(nowRungsStatus);
         }
         return rungsStatus;

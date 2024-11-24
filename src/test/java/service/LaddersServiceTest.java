@@ -17,7 +17,7 @@ import util.Errors;
 class LaddersServiceTest {
 
     final static TestRungsBuilder testRungsBuilder = new TestRungsBuilder();
-    final static LadderService laddersService = new LadderService(testRungsBuilder);
+     static LadderService laddersService = new LadderService(testRungsBuilder);
 
 
 
@@ -38,12 +38,12 @@ class LaddersServiceTest {
     @DisplayName("createLadders()에선 RungsBuilder로 각 줄의 오른쪽 rungs 유무를 받고 이를 활용해 Ladders 객체를 만든다.")
     void test() {
         // given
-        final Height height = new Height(5);
-        final CountOfLine countOfLine = new CountOfLine(3);
+         Height height = new Height(5);
+         CountOfLine countOfLine = new CountOfLine(3);
         List<String> names = Arrays.asList("일번", "이번", "삼번", "사번");
         List<String> outcomes = Arrays.asList("100", "200", "300", "400");
         // when
-        final Ladder ladder = laddersService.createLadder(countOfLine, height, names, outcomes);
+        Ladder ladder = laddersService.createLadder(countOfLine, height, names, outcomes);
         // then
         assertThat(ladder.getRightRungStatus())
             .isEqualTo(
@@ -75,7 +75,7 @@ class LaddersServiceTest {
         List<String> names = List.of("일", "이", "삼");
         List<String> outcomes = List.of("1000", "2000", "3000");
         // when
-        final CountOfLine countOfLine = laddersService.getcountOfLine(names, outcomes);
+        CountOfLine countOfLine = laddersService.getcountOfLine(names, outcomes);
         // then
         assertThat(countOfLine.value()).isEqualTo(names.size());
     }
@@ -89,7 +89,7 @@ class LaddersServiceTest {
                                             "삼번", "1000");
         String targetName = "이번";
         // when
-        final Map<String, String> resultToPrint = laddersService.getResultToPrint(result, targetName);
+        Map<String, String> resultToPrint = laddersService.getResultToPrint(result, targetName);
         // then
         assertThat(resultToPrint)
             .isEqualTo(Map.of("이번", "꽝"));
@@ -104,7 +104,7 @@ class LaddersServiceTest {
                                             "삼번", "1000");
         String targetName = "all";
         // when
-        final Map<String, String> resultToPrint = laddersService.getResultToPrint(result, targetName);
+        Map<String, String> resultToPrint = laddersService.getResultToPrint(result, targetName);
         // then
         assertThat(resultToPrint)
             .isEqualTo(result);
