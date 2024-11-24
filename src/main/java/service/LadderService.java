@@ -6,6 +6,7 @@ import domain.Ladder;
 import domain.Line;
 import domain.RungsBuilder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,7 +73,7 @@ public class LadderService {
 
     public Map<String, String> getResultToPrint(Map<String, String> result, String targetName) {
         if (isAllMode(targetName)) {
-            return result;
+            return Collections.unmodifiableMap(result);
         }
         validateTargetName(result, targetName);
         return Map.of(targetName, result.get(targetName));
