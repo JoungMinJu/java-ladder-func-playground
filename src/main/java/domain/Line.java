@@ -1,7 +1,8 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import util.Errors;
 
 public class Line {
@@ -17,14 +18,13 @@ public class Line {
         this.points = points;
     }
 
-    public static Line of(Player player, String outcome, List<Boolean> leftRungsStatus, List<Boolean> rightRungsStatus) {
+    public static Line of(Player player, String outcome, List<Boolean> leftRungsStatus,
+                          List<Boolean> rightRungsStatus) {
         validateHeight(leftRungsStatus, rightRungsStatus);
 
-        int maxPosition = leftRungsStatus.size();
-        List<Point> points = new ArrayList<>();
-        for (int position = 0; position < maxPosition; position++) {
-            points.add(new Point(leftRungsStatus.get(position), rightRungsStatus.get(position)));
-        }
+        List<Point> points = IntStream.range(0, leftRungsStatus.size())
+            .mapToObj(position -> new Point(leftRungsStatus.get(position), rightRungsStatus.get(position)))
+            .collect(Collectors.toList());
         return new Line(player, outcome, points);
     }
 
@@ -35,11 +35,9 @@ public class Line {
     }
 
     public List<Boolean> getRightStatus() {
-        List<Boolean> rightStatus = new ArrayList<>();
-        for (Point point : points) {
-            rightStatus.add(point.isConnectedToRightLadder());
-        }
-        return rightStatus;
+        return points.stream()
+            .map(Point::isConnectedToRightLadder)
+            .collect(Collectors.toList());
     }
 
     public int getHeight() {
@@ -55,12 +53,12 @@ public class Line {
     }
 
     public boolean isConnectedToLeftLineAt(int position) {
-         Point nowPoint = this.points.get(position);
+        Point nowPoint = this.points.get(position);
         return nowPoint.isConnectedToLeftLadder();
     }
 
     public boolean isConnectedToRightLineAt(int position) {
-         Point nowPoint = this.points.get(position);
+        Point nowPoint = this.points.get(position);
         return nowPoint.isConnectedToRightLadder();
     }
 

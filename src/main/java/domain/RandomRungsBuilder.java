@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -16,12 +15,9 @@ public class RandomRungsBuilder implements RungsBuilder {
 
     @Override
     public List<Boolean> buildAndGetRungsStatus(List<Boolean> prevRungsStatus) {
-        List<Boolean> rungsStatus = new ArrayList<>();
-        for (Boolean doesPrevLadderHaveRung : prevRungsStatus) {
-             boolean nowRungsStatus = generateRungIfAbsent(doesPrevLadderHaveRung);
-            rungsStatus.add(nowRungsStatus);
-        }
-        return rungsStatus;
+        return prevRungsStatus.stream()
+            .map(this::generateRungIfAbsent)
+            .collect(Collectors.toList());
     }
 
     private boolean generateRungIfAbsent(Boolean doesPrevLadderHaveRung) {
