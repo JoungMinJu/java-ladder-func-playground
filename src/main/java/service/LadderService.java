@@ -23,7 +23,7 @@ public class LadderService {
     }
 
     public Ladder createLadder(Height height, List<String> names, List<String> outcomes) {
-        final List<Player> players = getPlayers(names);
+        List<Player> players = getPlayers(names);
         CountOfLine countOfLine = getcountOfLine(players, outcomes);
         List<Line> lineCollection = createLineCollection(countOfLine, height, players, outcomes);
         return new Ladder(lineCollection);

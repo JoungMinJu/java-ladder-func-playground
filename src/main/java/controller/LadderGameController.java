@@ -1,6 +1,5 @@
 package controller;
 
-import domain.CountOfLine;
 import domain.Height;
 import domain.Ladder;
 import domain.RungsBuilder;
